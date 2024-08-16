@@ -10,6 +10,7 @@ module.exports = {
 		'airbnb/hooks',
 		'plugin:prettier/recommended',
 		'plugin:react-hooks/recommended',
+		'prettier',
 	],
 	ignorePatterns: ['dist', 'vite.config.ts'],
 	parser: '@typescript-eslint/parser',
@@ -35,7 +36,7 @@ module.exports = {
 		'import/prefer-default-export': 'off',
 		'consistent-return': 'error',
 		'no-underscore-dangle': ['error', { allowAfterThis: true }],
-		'max-len': ['error', { code: 100, ignoreComments: true }],
+		// 'max-len': ['error', { code: 100, ignoreComments: true }],
 		'react/function-component-definition': [
 			'error',
 			{
