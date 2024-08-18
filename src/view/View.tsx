@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Buttons from './Buttons/Buttons';
-import ExcelReader from './Excel/Excel';
+import FileReaderComponent from './FileReaderComponent/FileReaderComponent';
 import TextEditor from './TextEditor/TextEditor';
 import TextEditorError from './TextEditor/TextEditorError';
 
@@ -23,11 +23,11 @@ const View = (): JSX.Element => {
 
 	return (
 		<div>
-			<Buttons setStateFile={setStateFile} />
-			<TextEditor setStateTextEditor={setStateTextEditor} value={value} />
+			<Buttons setStateFile={setStateFile} stateTextEditor={{ value, error }} />
+			<TextEditor />
 			<TextEditorError error={error} />
-			{stateFile.type === 'excel' && (
-				<ExcelReader stateFile={stateFile} setStateTextEditor={setStateTextEditor} />
+			{stateFile.file && (
+				<FileReaderComponent stateFile={stateFile} setStateTextEditor={setStateTextEditor} />
 			)}
 		</div>
 	);
