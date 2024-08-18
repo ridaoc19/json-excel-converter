@@ -1,16 +1,16 @@
 import MonacoEditor from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
-import { Dispatch, SetStateAction, useRef } from 'react';
-import type { StateTextEditor } from '../View';
+import { useRef } from 'react';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
+import type { Error } from '../../redux/globalSlice';
+import { globalState, postError, postExcelJson } from '../../redux/globalSlice';
 
-interface TextEditorProps {
-	value: StateTextEditor['value'];
-	setStateTextEditor: Dispatch<SetStateAction<StateTextEditor>>;
-}
+type TextEditorType = () => JSX.Element;
 
-type TextEditorType = (data: TextEditorProps) => JSX.Element;
-
-const TextEditor: TextEditorType = ({ value, setStateTextEditor }) => {
+const TextEditor: TextEditorType = () => {
+	const { json } = useAppSelector(globalState);
+	const dispatch = useAppDispatch();
 	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
 	const handleEditorDidMount = (editorInstance: monaco.editor.IStandaloneCodeEditor): void => {
@@ -19,7 +19,7 @@ const TextEditor: TextEditorType = ({ value, setStateTextEditor }) => {
 
 	const handleEditorChange = (data: string | undefined): void => {
 		if (data !== undefined) {
-			setStateTextEditor(prevState => ({ ...prevState, value: data }));
+			dispatch(postExcelJson(data));
 		}
 	};
 
@@ -28,17 +28,15 @@ const TextEditor: TextEditorType = ({ value, setStateTextEditor }) => {
 			<MonacoEditor
 				height='50vh'
 				language='json'
-				value={value}
+				value={json}
 				onChange={handleEditorChange}
 				onMount={handleEditorDidMount}
 				onValidate={event => {
-					const error = event.map(({ message, startLineNumber: row }, id) => ({
+					const error: Omit<Error, 'id'>[] = event.map(({ message, startLineNumber: row }) => ({
 						message,
 						row,
-						id,
 					}));
-
-					setStateTextEditor(prevState => ({ ...prevState, error }));
+					dispatch(postError(error));
 				}}
 				theme='vs-dark'
 				options={{
