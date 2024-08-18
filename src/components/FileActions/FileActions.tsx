@@ -12,7 +12,7 @@ import {
 import { excelGenerate, excelReader } from '../../utils/excel';
 import { jsonGenerate, jsonReader } from '../../utils/json';
 
-const Buttons = (): JSX.Element => {
+const FileActions = (): JSX.Element => {
 	const { excel, json } = useAppSelector(globalState);
 	const dispatch = useAppDispatch();
 
@@ -73,4 +73,4 @@ const Buttons = (): JSX.Element => {
 	);
 };
 
-export default Buttons;
+export default FileActions;
