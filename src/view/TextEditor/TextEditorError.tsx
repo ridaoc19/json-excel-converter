@@ -1,12 +1,7 @@
 import useAppSelector from '../../hooks/useAppSelector';
 import { globalState } from '../../redux/globalSlice';
-import type { StateTextEditor } from '../View';
 
-interface TextEditorErrorProps {
-	error: StateTextEditor['error'];
-}
-
-type TextEditorErrorType = (data: TextEditorErrorProps) => JSX.Element;
+type TextEditorErrorType = () => JSX.Element;
 
 const TextEditorError: TextEditorErrorType = () => {
 	const { onprogress, error } = useAppSelector(globalState);

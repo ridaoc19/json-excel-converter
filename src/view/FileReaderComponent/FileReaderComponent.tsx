@@ -1,61 +1,10 @@
 import useAppSelector from '../../hooks/useAppSelector';
 import { globalState } from '../../redux/globalSlice';
-import type { StateFile, StateTextEditor } from '../View';
 
-interface FileReaderComponentProps {
-	stateFile: StateFile;
-	setStateTextEditor: React.Dispatch<React.SetStateAction<StateTextEditor>>;
-}
-
-type FileReaderComponentType = (data: FileReaderComponentProps) => JSX.Element;
+type FileReaderComponentType = () => JSX.Element;
 
 const FileReaderComponent: FileReaderComponentType = () => {
 	const { excel } = useAppSelector(globalState);
-
-	// const [tableData, setTableData] = useState<TableData>([]);
-
-	// useEffect(() => {
-	// 	if (stateFile.file) {
-	// 		const reader = new FileReader();
-
-	// 		if (stateFile.type === 'excel') {
-	// 			reader.onload = e => {
-	// 				const data = new Uint8Array(e.target?.result as ArrayBuffer);
-	// 				const workbook = XLSX.read(data, { type: 'array' });
-	// 				const sheetName = workbook.SheetNames[0];
-	// 				const worksheet = workbook.Sheets[sheetName];
-	// 				const jsonData = XLSX.utils.sheet_to_json<RowData>(worksheet, { header: 1 });
-
-	// 				setTableData(jsonData);
-
-	// 				const jsonString = JSON.stringify(jsonData, null, 2);
-	// 				setStateTextEditor(prevState => ({ ...prevState, value: jsonString }));
-	// 			};
-
-	// 			reader.readAsArrayBuffer(stateFile.file);
-	// 		} else if (stateFile.type === 'json') {
-	// 			reader.onload = e => {
-	// 				try {
-	// 					const jsonData = JSON.parse(e.target?.result as string);
-	// 					const formattedJsonString = JSON.stringify(jsonData, null, 2);
-	// 					setStateTextEditor(prevState => ({ ...prevState, value: formattedJsonString }));
-
-	// 					if (Array.isArray(jsonData) && jsonData.length > 0 && Array.isArray(jsonData[0])) {
-	// 						setTableData(jsonData);
-	// 					}
-	// 				} catch (error) {
-	// 					console.error('Error parsing JSON file:', error);
-	// 					setStateTextEditor(prevState => ({
-	// 						...prevState,
-	// 						value: 'Error al cargar el archivo JSON',
-	// 					}));
-	// 				}
-	// 			};
-
-	// 			reader.readAsText(stateFile.file);
-	// 		}
-	// 	}
-	// }, [stateFile, setStateTextEditor]);
 
 	return (
 		<div style={{ marginTop: '1rem' }}>

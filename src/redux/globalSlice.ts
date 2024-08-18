@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction } from '@reduxjs/toolkit';
+import generateUniqueId from '../utils/uuid';
 import createAppSlice from './createAppSlice';
 import type { RootState } from './store';
-import generateUniqueId from '../utils/uuid';
 
 export type CellData = string | number | boolean;
 export type JsonData = Record<string, string | number | boolean | null>;
@@ -20,7 +20,6 @@ export interface Error {
 }
 
 interface InitialStateGlobal {
-	jsonData: JsonData[];
 	excel: Excel;
 	json: string;
 	status: 'idle' | 'pending' | 'error' | 'success';
@@ -29,7 +28,6 @@ interface InitialStateGlobal {
 }
 
 const initialStateGlobal: InitialStateGlobal = {
-	jsonData: [],
 	excel: {
 		header: [],
 		rows: [],
@@ -49,26 +47,23 @@ export const globalSlice = createAppSlice({
 				state,
 				{ payload }: PayloadAction<InitialStateGlobal['excel'] | InitialStateGlobal['json']>
 			) => {
+				// ! JSON
 				if (typeof payload === 'string') {
-					// Si el payload es un string (JSON), convertir a formato Excel
 					state.json = payload;
 					const parseJson = JSON.parse(payload);
 
 					if (Array.isArray(parseJson)) {
 						const header = [...new Set(parseJson.flatMap(item => Object.keys(item)))];
 						const rows: RowData[] = parseJson.map(items => {
-							return Object.values(items);
+							return header.map(key => items[key] || '');
 						});
 
 						state.excel = { header, rows };
 					}
+					// ! EXCEL
 				} else {
-					// Si el payload es un array (Excel), convertir a formato JSON
-					state.excel = payload;
-
 					const objectsArray: Array<Record<string, CellData>> = payload.rows.map(row => {
 						if (Array.isArray(row)) {
-							// Asegurarse de que row es un array
 							return payload.header.reduce(
 								(acc, key, index) => {
 									acc[key] = row[index] ?? ''; // Manejar valores potencialmente indefinidos o null
@@ -79,17 +74,19 @@ export const globalSlice = createAppSlice({
 						}
 						return {}; // Manejar el caso en que row no sea un array
 					});
-
 					state.json = JSON.stringify(objectsArray, null, 2); // Formato JSON con indentación
+
+					const header = [...new Set(objectsArray.flatMap(item => Object.keys(item)))];
+					const rows: RowData[] = objectsArray.map(items => {
+						return header.map(key => items[key] || '');
+					});
+
+					state.excel = { header, rows };
 				}
 
 				state.status = 'success';
 			}
 		),
-		postJsonData: create.reducer((state, { payload }: PayloadAction<JsonData[]>) => {
-			state.jsonData = payload;
-			state.status = 'success';
-		}),
 		postProgress: create.reducer(
 			(state, { payload }: PayloadAction<InitialStateGlobal['onprogress']>) => {
 				state.onprogress = payload;
@@ -111,7 +108,6 @@ export const globalSlice = createAppSlice({
 	}),
 });
 
-export const { postJsonData, postProgress, postError, postStatus, postExcelJson } =
-	globalSlice.actions;
+export const { postProgress, postError, postStatus, postExcelJson } = globalSlice.actions;
 
 export const globalState = (state: RootState): InitialStateGlobal => state.global;

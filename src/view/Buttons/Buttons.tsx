@@ -1,25 +1,21 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent } from 'react';
 import * as XLSX from 'xlsx';
 import { TYPE_EXCEL, TYPE_JSON } from '../../core/const';
 import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
 import {
+	globalState,
 	HeaderRow,
 	postError,
 	postExcelJson,
-	postJsonData,
 	postProgress,
 	postStatus,
 	RowData,
 	SheetToJsonOutput,
 } from '../../redux/globalSlice';
-import type { StateFile, StateTextEditor } from '../View';
 
-interface ButtonsProps {
-	setStateFile: Dispatch<SetStateAction<StateFile>>;
-	stateTextEditor: StateTextEditor;
-}
-
-const Buttons = ({ setStateFile, stateTextEditor }: ButtonsProps): JSX.Element => {
+const Buttons = (): JSX.Element => {
+	const { excel, json } = useAppSelector(globalState);
 	const dispatch = useAppDispatch();
 
 	const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -29,57 +25,14 @@ const Buttons = ({ setStateFile, stateTextEditor }: ButtonsProps): JSX.Element =
 			const reader = new FileReader();
 
 			if (selectedFile.type === TYPE_JSON || selectedFile.type === TYPE_EXCEL) {
-				// 	reader.onload = e => {
-				// 		try {
-				// 			const jsonData = JSON.parse(e.target?.result as string);
-
-				// 			if (!Array.isArray(jsonData)) {
-				// 				dispatch(postError(['tiene que ser un array']));
-				// 			} else if (jsonData.length === 0) {
-				// 				dispatch(postError(['el array debe tener contenido']));
-				// 			} else {
-				// 				dispatch(postJsonData(jsonData));
-				// 			}
-				// 		} catch (error) {
-				// 			console.error('Error parsing JSON file:', error);
-				// 		}
-				// 	};
-
-				// 	reader.onerror = () => {
-				// 		dispatch(postError(['error']));
-				// 	};
-
-				// 	reader.onloadstart = () => {
-				// 		dispatch(postStatus('pending'));
-				// 	};
-
-				// 	reader.onprogress = e => {
-				// 		if (e.lengthComputable) {
-				// 			const percentLoaded = (e.loaded / e.total) * 100;
-				// 			dispatch(postProgress(Number(percentLoaded.toFixed(0))), 'hola');
-				// 		}
-				// 	};
-
-				// 	reader.readAsText(selectedFile);
-				// }
-
 				// ! INICIO
 				// ? RESULTADO
 				reader.onload = e => {
 					try {
 						if (selectedFile.type === TYPE_JSON) {
-							const jsonData = JSON.parse(e.target?.result as string);
 							const file = e.target?.result;
 							if (file && typeof file === 'string') {
 								dispatch(postExcelJson(file));
-							}
-
-							if (!Array.isArray(jsonData)) {
-								dispatch(postError([{ message: 'tiene que ser un array', row: null }]));
-							} else if (jsonData.length === 0) {
-								dispatch(postError([{ message: 'el array debe tener contenido', row: null }]));
-							} else {
-								dispatch(postJsonData(jsonData));
 							}
 						}
 
@@ -126,10 +79,6 @@ const Buttons = ({ setStateFile, stateTextEditor }: ButtonsProps): JSX.Element =
 					reader.readAsArrayBuffer(selectedFile);
 				}
 				// ! FINAL
-				setStateFile({
-					file: selectedFile,
-					type: selectedFile.type === 'application/json' ? 'json' : 'excel',
-				});
 			}
 		} else {
 			alert('No se seleccionó ningún archivo');
@@ -138,7 +87,7 @@ const Buttons = ({ setStateFile, stateTextEditor }: ButtonsProps): JSX.Element =
 
 	const handleDownload = (): void => {
 		// Descargar archivo JSON
-		const blobJson = new Blob([stateTextEditor.value], { type: 'application/json' });
+		const blobJson = new Blob([json], { type: 'application/json' });
 		const urlJson = URL.createObjectURL(blobJson);
 		const linkJson = document.createElement('a');
 		linkJson.href = urlJson;
@@ -147,8 +96,8 @@ const Buttons = ({ setStateFile, stateTextEditor }: ButtonsProps): JSX.Element =
 
 		// Descargar archivo Excel
 		try {
-			const jsonData = JSON.parse(stateTextEditor.value);
-			const worksheet = XLSX.utils.json_to_sheet(jsonData);
+			// const jsonData = JSON.parse(stateTextEditor.value);
+			const worksheet = XLSX.utils.json_to_sheet([...excel.header, ...excel.rows]);
 			const workbook = XLSX.utils.book_new();
 			XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 			const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
