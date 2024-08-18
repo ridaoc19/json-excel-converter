@@ -1,0 +1,25 @@
+@import './Validation/validation';
+
+.json {
+  &__editor {
+    height: 50vh;
+    margin-bottom: $spacing;
+
+    .monaco-editor {
+      border: 1px solid $editor-border;
+      border-radius: $border-radius;
+    }
+  }
+
+  &__validation {
+    background-color: $background-color;
+    padding: $spacing;
+    border-radius: $border-radius;
+    color: $error-color;
+    font-size: 0.875rem;
+
+    p {
+      margin: 0.5rem 0;
+    }
+  }
+}

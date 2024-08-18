@@ -1,0 +1,23 @@
+.excel {
+  // display              : grid;
+  // grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  // gap                  : $spacing;
+  max-height: 482px;
+  height    : 100%;
+  overflow-y: scroll;
+
+  &__title {
+    font-weight: bold;
+    color      : $primary-color;
+    text-align : center;
+
+  }
+
+  &__row {
+    padding         : $spacing * 0.5;
+    border-bottom   : 1px solid $editor-border;
+    background-color: lighten($editor-background, 10%);
+    color           : $editor-font-color;
+    border-radius   : $border-radius;
+  }
+}

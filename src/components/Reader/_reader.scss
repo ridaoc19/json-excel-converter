@@ -1,0 +1,17 @@
+@import './Excel/excel';
+@import './Json/json';
+
+.reader {
+  display        : flex;
+  justify-content: space-between;
+
+  &__json,
+  &__excel {
+    width           : 48%;
+    background-color: $editor-background;
+    padding         : $spacing;
+    border-radius   : $border-radius;
+    box-shadow      : 0 4px 8px rgba(0, 0, 0, 0.1);
+    color           : $editor-font-color;
+  }
+}
