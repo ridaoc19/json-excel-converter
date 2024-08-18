@@ -7,24 +7,17 @@ const Excel: ExcelType = () => {
 	const { excel } = useAppSelector(globalState);
 
 	return (
-		<div style={{ marginTop: '1rem' }}>
+		<div className='excel'>
 			{excel.header.length > 0 ? (
 				<div
 					style={{
 						display: 'grid',
+						gap: '0.5rem',
 						gridTemplateColumns: `repeat(${excel.header.length}, 1fr)`,
 					}}
 				>
 					{excel.header.map(title => (
-						<div
-							key={title}
-							style={{
-								border: '1px solid #ccc',
-								padding: '0.5rem',
-								textAlign: 'center',
-								backgroundColor: '#f0f0f0',
-							}}
-						>
+						<div key={title} className='excel__title'>
 							{title}
 						</div>
 					))}
@@ -32,15 +25,7 @@ const Excel: ExcelType = () => {
 						return row.map((cell, cellIndex) => {
 							const key = `${rowIndex}-${cellIndex}`;
 							return (
-								<div
-									key={key}
-									style={{
-										border: '1px solid #ccc',
-										padding: '0.5rem',
-										textAlign: 'center',
-										backgroundColor: '#fff',
-									}}
-								>
+								<div key={key} className='excel__row'>
 									{cell !== null ? cell.toString() : ''}
 								</div>
 							);

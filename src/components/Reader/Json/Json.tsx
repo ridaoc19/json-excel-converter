@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { globalState, postError, postExcelJson } from '../../../redux/globalSlice';
+import Validation from './Validation/Validation';
 
 type JsonType = () => JSX.Element;
 
@@ -23,29 +24,34 @@ const Json: JsonType = () => {
 	};
 
 	return (
-		<div>
-			<MonacoEditor
-				height='50vh'
-				language='json'
-				value={json}
-				onChange={handleEditorChange}
-				onMount={handleEditorDidMount}
-				onValidate={event => {
-					const error: Omit<ErrorLocal, 'id'>[] = event.map(
-						({ message, startLineNumber: row }) => ({
-							message,
-							row,
-						})
-					);
-					dispatch(postError(error));
-				}}
-				theme='vs-dark'
-				options={{
-					automaticLayout: true,
-					minimap: { enabled: false },
-					formatOnType: true,
-				}}
-			/>
+		<div className='json'>
+			<div className='json__editor'>
+				<MonacoEditor
+					height='50vh'
+					language='json'
+					value={json}
+					onChange={handleEditorChange}
+					onMount={handleEditorDidMount}
+					onValidate={event => {
+						const error: Omit<ErrorLocal, 'id'>[] = event.map(
+							({ message, startLineNumber: row }) => ({
+								message,
+								row,
+							})
+						);
+						dispatch(postError(error));
+					}}
+					theme='vs-dark'
+					options={{
+						automaticLayout: true,
+						minimap: { enabled: false },
+						formatOnType: true,
+					}}
+				/>
+			</div>
+			<div className='json__validation'>
+				<Validation />
+			</div>
 		</div>
 	);
 };

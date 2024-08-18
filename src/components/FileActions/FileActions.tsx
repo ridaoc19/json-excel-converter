@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { TYPE_EXCEL, TYPE_JSON } from '../../core/const';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -15,6 +15,7 @@ import { jsonGenerate, jsonReader } from '../../utils/json';
 
 const FileActions = (): JSX.Element => {
 	const { excel, json, onprogress } = useAppSelector(globalState);
+	const [uploadLabel, setUploadLabel] = useState('Subir archivo');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const dispatch = useAppDispatch();
 
@@ -23,6 +24,7 @@ const FileActions = (): JSX.Element => {
 
 		if (selectedFile) {
 			const reader = new FileReader();
+			setUploadLabel('Subiendo... 0%');
 
 			if (selectedFile.type === TYPE_JSON || selectedFile.type === TYPE_EXCEL) {
 				reader.onload = e => {
@@ -33,16 +35,24 @@ const FileActions = (): JSX.Element => {
 					if (selectedFile.type === TYPE_EXCEL) {
 						dispatch(postExcelJson(excelReader(e)));
 					}
+					setUploadLabel('Subir archivo');
 				};
 
-				reader.onerror = () => dispatch(postError([{ message: 'error', row: null }]));
+				reader.onerror = () => {
+					dispatch(postError([{ message: 'error', row: null }]));
+					setUploadLabel('Error al subir');
+				};
 				reader.onloadstart = () => {
 					dispatch(postStatus('pending'));
 					dispatch(postProgress(10));
 				};
-				reader.onprogress = e =>
-					e.lengthComputable &&
-					dispatch(postProgress(Number(((e.loaded / e.total) * 100).toFixed(0))));
+				reader.onprogress = e => {
+					if (e.lengthComputable) {
+						const progress = Number(((e.loaded / e.total) * 100).toFixed(0));
+						dispatch(postProgress(progress));
+						setUploadLabel(`Subiendo... ${progress}%`);
+					}
+				};
 
 				if (selectedFile.type === TYPE_JSON) {
 					reader.readAsText(selectedFile);
@@ -60,20 +70,23 @@ const FileActions = (): JSX.Element => {
 		excelGenerate(excel);
 	};
 
+	const progressStyle = {
+		width: `${onprogress}%`,
+	};
+
 	return (
-		<div style={{ display: 'flex', gap: '1rem', margin: '1rem', justifyContent: 'space-between' }}>
-			<div>
-				<label htmlFor='jsonInput'>
-					Subir archivo:
-					<input id='jsonInput' ref={fileInputRef} type='file' onChange={handleFileChange} />
-				</label>
-				<div>
-					<progress value={onprogress} max='100' />
-					<span>{onprogress}%</span>
+		<div className='file-actions'>
+			<div className='file-actions__upload'>
+				<div className='file-actions__upload--input'>
+					<label htmlFor='jsonInput' style={{ position: 'relative' }}>
+						<div className='progress-bar' style={progressStyle} />
+						{uploadLabel}
+						<input id='jsonInput' ref={fileInputRef} type='file' onChange={handleFileChange} />
+					</label>
 				</div>
 			</div>
 
-			<div>
+			<div className='file-actions__empty'>
 				<button
 					type='button'
 					onClick={() => {
@@ -87,7 +100,7 @@ const FileActions = (): JSX.Element => {
 				</button>
 			</div>
 
-			<div>
+			<div className='file-actions__download'>
 				<button type='button' onClick={handleDownload}>
 					Descargar
 				</button>
