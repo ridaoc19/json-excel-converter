@@ -18,7 +18,7 @@ const initialStateGlobal: InitialStateGlobal = {
 		header: [],
 		rows: [],
 	},
-	json: '',
+	json: '[]',
 	status: 'idle',
 	onprogress: 0,
 	error: [],
@@ -51,15 +51,19 @@ export const globalSlice = createAppSlice({
 		),
 		postError: create.reducer((state, { payload }: PayloadAction<Omit<ErrorLocal, 'id'>[]>) => {
 			state.error = payload.map(error => ({ id: generateUniqueId(), ...error }));
-			// state.error = [
-			// 	...state.error,
-			// 	...payload.map(error => ({ id: generateUniqueId(), ...error })),
-			// ];
 			state.status = 'error';
+		}),
+		emptyState: create.reducer(state => {
+			state.error = initialStateGlobal.error;
+			state.excel = initialStateGlobal.excel;
+			state.json = initialStateGlobal.json;
+			state.onprogress = initialStateGlobal.onprogress;
+			state.status = initialStateGlobal.status;
 		}),
 	}),
 });
 
-export const { postProgress, postError, postStatus, postExcelJson } = globalSlice.actions;
+export const { postProgress, postError, postStatus, postExcelJson, emptyState } =
+	globalSlice.actions;
 
 export const globalState = (state: RootState): InitialStateGlobal => state.global;
