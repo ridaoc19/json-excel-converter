@@ -27,7 +27,7 @@ const Json: JsonType = () => {
 		<div className='json'>
 			<div className='json__editor'>
 				<MonacoEditor
-					height='50vh'
+					// height='58vh'
 					language='json'
 					value={json}
 					onChange={handleEditorChange}

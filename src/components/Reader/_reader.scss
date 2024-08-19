@@ -2,12 +2,13 @@
 @import './Json/json';
 
 .reader {
-  display        : flex;
-  justify-content: space-between;
+  height: 100%;
+  display              : grid;
+  grid-template-columns: repeat(2, 49%);
+  gap                  : 0.5rem;
 
   &__json,
   &__excel {
-    width           : 48%;
     background-color: $editor-background;
     padding         : $spacing;
     border-radius   : $border-radius;

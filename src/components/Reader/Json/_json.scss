@@ -1,25 +1,31 @@
 @import './Validation/validation';
 
 .json {
-  &__editor {
-    height: 50vh;
-    margin-bottom: $spacing;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 80% 15%; // 80% para el editor y 20% para la validación
+  gap: 1rem;
 
+  &__editor {
+    height: 100%; // Ocupa el 80% del contenedor padre
     .monaco-editor {
       border: 1px solid $editor-border;
       border-radius: $border-radius;
+      height: 100%;
     }
   }
 
   &__validation {
-    background-color: $background-color;
-    padding: $spacing;
+    height: 100%; // Ocupa el 20% del contenedor padre
+    overflow-y: auto; // Habilita el desplazamiento si el contenido se desborda
+    background-color: lighten($error-color, 40%);
+    padding: 0.5rem;
     border-radius: $border-radius;
     color: $error-color;
-    font-size: 0.875rem;
 
     p {
-      margin: 0.5rem 0;
+      margin: 0;
     }
   }
 }

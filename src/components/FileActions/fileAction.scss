@@ -5,24 +5,19 @@
 }
 
 .file-actions {
-  background-color: $background-color;
-  padding         : $spacing;
-  border-radius   : $border-radius;
-  box-shadow      : 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-size       : $font-size;
-  color           : $text-color;
-  display         : flex;
-  justify-content : space-between;
+  padding        : $spacing;
+  border-radius  : $border-radius;
+  box-shadow     : 0 4px 8px rgba(0, 0, 0, 0.1);
+  display        : flex;
+  justify-content: space-between;
 
   &__upload {
-    margin-bottom: $spacing;
 
     &--input {
       label {
         display         : inline-block;
         cursor          : pointer;
         background-color: $primary-color;
-        color           : $text-color;
         padding         : 0.75rem 1.5rem;
         border-radius   : $border-radius;
         font-weight     : bold;
@@ -58,13 +53,12 @@
   }
 
   &__empty {
-    margin-bottom: $spacing;
 
     button {
       background-color: $danger-color;
       border          : none;
       color           : $text-color;
-      padding         : 0.5rem 1rem;
+      padding         : 0.75rem 1.5rem;
       border-radius   : $border-radius;
       cursor          : pointer;
       font-weight     : bold;
@@ -85,7 +79,7 @@
       background-color: $primary-color;
       border          : none;
       color           : $text-color;
-      padding         : 0.5rem 1rem;
+      padding         : 0.75rem 1.5rem;
       border-radius   : $border-radius;
       cursor          : pointer;
       font-weight     : bold;

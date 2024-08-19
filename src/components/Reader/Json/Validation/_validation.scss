@@ -1,11 +1,10 @@
 .validation {
   background-color: lighten($error-color, 40%);
-  padding: $spacing;
-  border-radius: $border-radius;
+  height: 100%;
+  padding: 0.5rem;
   color: $error-color;
-  font-size: 0.875rem;
 
   p {
-    margin: 0.5rem 0;
+    margin: 0;
   }
 }
