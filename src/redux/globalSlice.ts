@@ -15,10 +15,40 @@ export interface InitialStateGlobal {
 
 const initialStateGlobal: InitialStateGlobal = {
 	excel: {
-		header: [],
-		rows: [],
+		header: ['Introducción', 'Subir archivo', 'Limpiar', 'Descargar', 'Editor de texto'],
+		rows: [
+			[
+				'En esta aplicación puede agregar archivos con extension Excel y JSON, puede modificarlo en el editor y luego descargarlos',
+				'Con este botón podrás subir archivos Excel o Json',
+				'Podrás Limpiar todo lo que este cargado',
+				'Descargara un archivo Excel y JSON con el contenido',
+				'Puede editar el texto que haya cargado, se vera reflejado en el excel y descargarlo',
+			],
+		],
 	},
-	json: '[]',
+	json: JSON.stringify(
+		[
+			{
+				Introducción:
+					'En esta aplicación puede agregar archivos con extension Excel y JSON, puede modificarlo en el editor y luego descargarlos',
+			},
+			{
+				'Subir archivo': 'Con este botón podrás subir archivos Excel o Json',
+			},
+			{
+				Limpiar: 'Podrás Limpiar todo lo que este cargado',
+			},
+			{
+				Descargar: 'Descargara un archivo Excel y JSON con el contenido',
+			},
+			{
+				'Editor de texto':
+					'Puede editar el texto que haya cargado, se vera reflejado en el excel y descargarlo',
+			},
+		],
+		null,
+		2
+	),
 	status: 'idle',
 	onprogress: 0,
 	error: [],
@@ -55,8 +85,8 @@ export const globalSlice = createAppSlice({
 		}),
 		emptyState: create.reducer(state => {
 			state.error = initialStateGlobal.error;
-			state.excel = initialStateGlobal.excel;
-			state.json = initialStateGlobal.json;
+			state.excel = { header: [], rows: [] };
+			state.json = '[]';
 			state.onprogress = initialStateGlobal.onprogress;
 			state.status = initialStateGlobal.status;
 		}),
