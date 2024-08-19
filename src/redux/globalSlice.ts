@@ -24,6 +24,7 @@ const initialStateGlobal: InitialStateGlobal = {
 				'Descargara un archivo Excel y JSON con el contenido',
 				'Puede editar el texto que haya cargado, se vera reflejado en el excel y descargarlo',
 			],
+			['Puede crear una nueva fila', '', '', '', ''],
 		],
 	},
 	json: JSON.stringify(
@@ -36,6 +37,12 @@ const initialStateGlobal: InitialStateGlobal = {
 				Descargar: 'Descargara un archivo Excel y JSON con el contenido',
 				'Editor de texto':
 					'Puede editar el texto que haya cargado, se vera reflejado en el excel y descargarlo',
+			},
+			{
+				Introducción: 'Puede crear una nueva fila',
+				Limpiar: '',
+				Descargar: '',
+				'Editor de texto': '',
 			},
 		],
 		null,
