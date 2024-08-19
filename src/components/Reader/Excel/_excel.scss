@@ -1,24 +1,24 @@
 .excel {
-  display              : grid;
-  height    : 100%;
-  overflow-y: auto;
+	display: grid;
+	height: 100%;
+	overflow-y: auto;
+	align-items: start;
 
-  >div {
-    display: grid;
-    gap: 0.2rem;
-  }
+	> div {
+		display: grid;
+		gap: 0.2rem;
+	}
 
-  &__title {
-    font-weight: bold;
-    color      : $primary-color;
-    text-align : center;
+	&__title {
+		font-weight: bold;
+		color: $primary-color;
+		text-align: center;
+	}
 
-  }
-
-  &__row {
-    padding         : $spacing * 0.5;
-    border-bottom   : 1px solid $editor-border;
-    background-color: lighten($editor-background, 10%);
-    color           : $editor-font-color;
-  }
+	&__row {
+		padding: $spacing * 0.5;
+		border-bottom: 1px solid $editor-border;
+		background-color: lighten($editor-background, 10%);
+		color: $editor-font-color;
+	}
 }
