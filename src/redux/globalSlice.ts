@@ -31,17 +31,9 @@ const initialStateGlobal: InitialStateGlobal = {
 			{
 				Introducción:
 					'En esta aplicación puede agregar archivos con extension Excel y JSON, puede modificarlo en el editor y luego descargarlos',
-			},
-			{
 				'Subir archivo': 'Con este botón podrás subir archivos Excel o Json',
-			},
-			{
 				Limpiar: 'Podrás Limpiar todo lo que este cargado',
-			},
-			{
 				Descargar: 'Descargara un archivo Excel y JSON con el contenido',
-			},
-			{
 				'Editor de texto':
 					'Puede editar el texto que haya cargado, se vera reflejado en el excel y descargarlo',
 			},
