@@ -2,16 +2,18 @@
 @import './Json/json';
 
 .reader {
-  display        : flex;
-  justify-content: space-between;
+	height: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 49%);
+	gap: 0.5rem;
 
-  &__json,
-  &__excel {
-    width           : 48%;
-    background-color: $editor-background;
-    padding         : $spacing;
-    border-radius   : $border-radius;
-    box-shadow      : 0 4px 8px rgba(0, 0, 0, 0.1);
-    color           : $editor-font-color;
-  }
+	&__json,
+	&__excel {
+		background-color: $editor-background;
+		padding: $spacing;
+		border-radius: $border-radius;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		color: $editor-font-color;
+		overflow-y: auto;
+	}
 }

@@ -1,25 +1,29 @@
-@import './Validation/validation';
-
 .json {
-  &__editor {
-    height: 50vh;
-    margin-bottom: $spacing;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: 80% 15%;
+	gap: 1rem;
 
-    .monaco-editor {
-      border: 1px solid $editor-border;
-      border-radius: $border-radius;
-    }
-  }
+	&__editor {
+		height: 100%;
+		.monaco-editor {
+			border: 1px solid $editor-border;
+			border-radius: $border-radius;
+			height: 100%;
+		}
+	}
 
-  &__validation {
-    background-color: $background-color;
-    padding: $spacing;
-    border-radius: $border-radius;
-    color: $error-color;
-    font-size: 0.875rem;
+	&__validation {
+		height: 100%;
+		overflow-y: auto;
+		background-color: lighten($error-color, 40%);
+		padding: 0.5rem;
+		border-radius: $border-radius;
+		color: $error-color;
 
-    p {
-      margin: 0.5rem 0;
-    }
-  }
+		p {
+			margin: 0;
+		}
+	}
 }

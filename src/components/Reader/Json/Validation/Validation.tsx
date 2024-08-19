@@ -6,13 +6,11 @@ type ValidationType = () => JSX.Element;
 const Validation: ValidationType = () => {
 	const { error } = useAppSelector(globalState);
 	return (
-		<div className='validation'>
+		<>
 			{error.map(({ row, message, id }) => (
-				<div key={id}>
-					<p>{`${row} - ${message}`}</p>
-				</div>
+				<p key={id}>{`${row} - ${message}`}</p>
 			))}
-		</div>
+		</>
 	);
 };
 

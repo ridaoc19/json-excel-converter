@@ -9,13 +9,7 @@ const Excel: ExcelType = () => {
 	return (
 		<div className='excel'>
 			{excel.header.length > 0 ? (
-				<div
-					style={{
-						display: 'grid',
-						gap: '0.5rem',
-						gridTemplateColumns: `repeat(${excel.header.length}, 1fr)`,
-					}}
-				>
+				<div style={{ gridTemplateColumns: `repeat(${excel.header.length}, 1fr)` }}>
 					{excel.header.map(title => (
 						<div key={title} className='excel__title'>
 							{title}
