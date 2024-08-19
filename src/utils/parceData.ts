@@ -23,7 +23,7 @@ export const parceData: ParceData = payload => {
 					{} as Record<string, CellData>
 				);
 			}
-			return {}; // Manejar el caso en que row no sea un array
+			return {};
 		});
 		data = objectsArray;
 	}
