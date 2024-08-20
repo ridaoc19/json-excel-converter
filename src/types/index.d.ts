@@ -19,3 +19,6 @@ declare interface ErrorLocal {
 	message: string;
 	row: number | null;
 }
+
+declare type HandleClick = (event: MouseEvent<HTMLButtonElement>) => void;
+declare type HandleChangeText = (event: ChangeEvent<HTMLInputElement>) => void;

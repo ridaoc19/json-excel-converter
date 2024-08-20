@@ -4,6 +4,8 @@ import { CreateContext, initialStateContext } from '../../../hooks/useContext/St
 import { excelGenerate, excelReader } from '../../../utils/excel';
 import { jsonGenerate, jsonReader } from '../../../utils/json';
 import { parceData } from '../../../utils/parceData';
+import Button from '../../../components/button/Button';
+import { ButtonType } from '../../../components/button/button.type';
 
 const FileActions = (): JSX.Element => {
 	const { stateContext, setStateContext } = useContext(CreateContext);
@@ -64,27 +66,41 @@ const FileActions = (): JSX.Element => {
 						<input id='jsonInput' ref={fileInputRef} type='file' onChange={handleFileChange} />
 					</label>
 				</div>
+
+				<div className='file-actions__empty'>
+					<Button
+						id='button'
+						text='Limpiar'
+						type={ButtonType.Error}
+						disabled={stateContext.excel.header.length === 0}
+						handleClick={() => {
+							if (fileInputRef.current) {
+								fileInputRef.current.value = '';
+							}
+							setProgress(0);
+							setStateContext({ ...initialStateContext, isLogin: true });
+						}}
+					/>
+				</div>
+
+				<div className='file-actions__download'>
+					<Button
+						id='button'
+						text='Descargar'
+						disabled={stateContext.excel.header.length === 0}
+						type={ButtonType.Success}
+						handleClick={handleDownload}
+					/>
+				</div>
 			</div>
 
-			<div className='file-actions__empty'>
-				<button
-					type='button'
-					onClick={() => {
-						if (fileInputRef.current) {
-							fileInputRef.current.value = '';
-						}
-						setProgress(0);
-						setStateContext({ ...initialStateContext, isLogin: true });
-					}}
-				>
-					Limpiar
-				</button>
-			</div>
-
-			<div className='file-actions__download'>
-				<button type='button' onClick={handleDownload}>
-					Descargar
-				</button>
+			<div>
+				<Button
+					id='button'
+					text='Cerrar sesión'
+					type={ButtonType.Dark}
+					handleClick={() => setStateContext(prevState => ({ ...prevState, isLogin: false }))}
+				/>
 			</div>
 		</div>
 	);

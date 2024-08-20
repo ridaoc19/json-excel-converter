@@ -7,7 +7,7 @@ export const initialStateContext: InitialStateContext = {
 		rows: [],
 	},
 	json: '{}',
-	isLogin: true,
+	isLogin: false,
 	error: [],
 };
 

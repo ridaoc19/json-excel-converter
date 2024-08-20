@@ -1,0 +1,97 @@
+@mixin status($type) {
+	@if $type==error {
+		> span {
+			border: 1px solid #f44336;
+
+			input::placeholder {
+				color: #e74c3c;
+			}
+		}
+	} @else if $type==brand {
+		> span {
+			border: 1px solid #abb2bf;
+
+			input::placeholder {
+				color: none;
+			}
+		}
+	}
+}
+
+.input {
+	position: relative;
+	margin-top: 0.5rem;
+	display: flex;
+	flex-direction: column;
+
+	&__label {
+		position: absolute;
+		left: 0.5rem;
+		top: 0.5rem;
+		transition:
+			top 0.3s ease,
+			opacity 0.3s ease;
+		padding: 0 0.3rem;
+		font-size: small;
+		color: #abb2bf;
+		opacity: 0;
+		visibility: hidden;
+
+		&.active {
+			top: -0.5rem;
+			opacity: 1;
+			background-color: white;
+			color: #2c3e50;
+			visibility: visible;
+		}
+	}
+
+	.input_error {
+		@include status(error);
+	}
+
+	.input_brand {
+		@include status(brand);
+	}
+
+	> div {
+		> span {
+			display: flex;
+			gap: 0.3rem;
+			border-radius: 0.3rem;
+			padding: 0.8rem;
+
+			> span {
+				display: flex;
+				align-items: center;
+			}
+
+			> input {
+				padding: 0;
+				border: none;
+				border-radius: 0;
+				outline: none;
+				margin: 0;
+				width: 100%;
+
+				&:-webkit-autofill {
+					-webkit-box-shadow: 0 0 0 30px white inset;
+				}
+			}
+		}
+	}
+
+	> div:nth-child(3) {
+		> div {
+			> div {
+				> span {
+					display: block;
+					color: #f44336;
+					text-align: center;
+					font-size: small;
+					min-height: 0.9rem;
+				}
+			}
+		}
+	}
+}

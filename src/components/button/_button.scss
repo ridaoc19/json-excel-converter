@@ -1,0 +1,254 @@
+@mixin button_repeat($type) {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	gap: 0.3rem;
+	min-height: 2.5rem;
+	cursor: pointer;
+	user-select: none;
+	border-radius: 0.3rem;
+	outline: none;
+	align-items: center;
+	position: relative;
+	transition:
+		background-color 0.3s,
+		color 0.3s,
+		transform 0.3s;
+
+	@if $type==button_dark {
+		background-color: #3498db;
+		color: white;
+		border: 1px solid #3c3f41;
+
+		&:hover {
+			background-color: #61bbf7;
+		}
+
+		&:active {
+			background-color: #475e85;
+			color: white;
+		}
+
+		&:disabled {
+			background-color: #eff3fa;
+			color: #a9b4cd;
+			cursor: not-allowed;
+			border: 1px solid #848fac;
+		}
+	} @else if $type==button_light {
+		background-color: #fafbfd;
+		color: #3498db;
+		border: 1px solid #a9b4cd;
+
+		&:hover {
+			background-color: #e3e8ef;
+		}
+
+		&:active {
+			background-color: #3c3f41;
+			color: white;
+		}
+
+		&:disabled {
+			background-color: #eff3fa;
+			color: #a9b4cd;
+			cursor: not-allowed;
+		}
+	} @else if $type==button_none {
+		background-color: transparent;
+		border: none;
+		height: 1.8rem;
+		padding: 0;
+
+		.button__text-container {
+			margin: 0;
+			margin-right: auto;
+
+			div {
+				text-align: start;
+			}
+		}
+	} @else if $type==button_highlighter {
+		background-color: transparent;
+		border: none;
+		border-radius: 0;
+
+		.button__text-container {
+			margin: 0;
+			margin-right: auto;
+
+			div {
+				text-align: start;
+			}
+		}
+
+		&:hover {
+			background-color: #dfe8f6;
+		}
+	} @else if $type==button_link {
+		background-color: transparent;
+		border: none;
+		height: 1.8rem;
+		padding: 0;
+
+		.button__text-container {
+			margin: 0;
+			margin-right: auto;
+
+			div {
+				text-align: start;
+			}
+		}
+
+		div {
+			display: inline-block;
+			position: relative;
+			color: #3c3f41;
+			text-decoration: none;
+
+			&:after {
+				content: '';
+				display: block;
+				margin: auto;
+				height: 2px;
+				width: 0px;
+				transition: all 0.5s;
+			}
+
+			&:hover:after {
+				width: 100%;
+				background: #3498db;
+			}
+		}
+	} @else if $type==button_information {
+		background-color: #0091d8;
+		color: white;
+		border: 1px solid #0091d8;
+
+		&:hover {
+			background-color: #006db4;
+		}
+
+		&:active {
+			background-color: #014d90;
+			color: white;
+		}
+
+		&:disabled {
+			background-color: #eff3fa;
+			color: #a9b4cd;
+			cursor: not-allowed;
+		}
+	} @else if $type==button_success {
+		background-color: #66b949;
+		color: white;
+		border: 1px solid #66b949;
+
+		&:hover {
+			background-color: #479b36;
+		}
+
+		&:active {
+			background-color: #2b7d25;
+			color: white;
+		}
+
+		&:disabled {
+			background-color: #eff3fa;
+			color: #a9b4cd;
+			cursor: not-allowed;
+		}
+	} @else if $type==button_warning {
+		background-color: #cfc331;
+		color: white;
+		border: 1px solid #cfc331;
+
+		&:hover {
+			background-color: #aea227;
+		}
+
+		&:active {
+			background-color: #8c821d;
+			color: white;
+		}
+
+		&:disabled {
+			background-color: #eff3fa;
+			color: #a9b4cd;
+			cursor: not-allowed;
+		}
+	} @else if $type==button_error {
+		background-color: #db2424;
+		color: white;
+		border: 1px solid #db2424;
+
+		&:hover {
+			background-color: #b71926;
+		}
+
+		&:active {
+			background-color: #930f25;
+			color: white;
+		}
+
+		&:disabled {
+			background-color: #eff3fa;
+			color: #a9b4cd;
+			cursor: not-allowed;
+		}
+	}
+
+	span,
+	div {
+		pointer-events: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.button__text-container {
+		margin: auto;
+	}
+}
+
+.button {
+	button {
+		all: unset;
+		line-height: 0;
+	}
+
+	&.button_dark {
+		@include button_repeat(button_dark);
+	}
+
+	&.button_light {
+		@include button_repeat(button_light);
+	}
+
+	&.button_none {
+		@include button_repeat(button_none);
+	}
+
+	&.button_highlighter {
+		@include button_repeat(button_highlighter);
+	}
+
+	&.button_link {
+		@include button_repeat(button_link);
+	}
+
+	&.button_information {
+		@include button_repeat(button_information);
+	}
+
+	&.button_success {
+		@include button_repeat(button_success);
+	}
+
+	&.button_warning {
+		@include button_repeat(button_warning);
+	}
+
+	&.button_error {
+		@include button_repeat(button_error);
+	}
+}
