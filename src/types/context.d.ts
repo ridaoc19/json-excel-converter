@@ -8,8 +8,6 @@ declare interface ContextProps {
 declare interface InitialStateContext {
 	excel: Excel;
 	json: string;
-	status: 'idle' | 'pending' | 'error' | 'success';
 	isLogin: boolean;
-	onprogress: number;
 	error: ErrorLocal[];
 }

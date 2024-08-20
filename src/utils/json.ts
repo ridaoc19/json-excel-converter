@@ -1,6 +1,8 @@
+import { TYPE_JSON } from '../core/const';
+
+// Descargar archivo JSON
 export const jsonGenerate = ({ json }: { json: string }): void => {
-	// Descargar archivo JSON
-	const blobJson = new Blob([json], { type: 'application/json' });
+	const blobJson = new Blob([json], { type: TYPE_JSON });
 	const urlJson = URL.createObjectURL(blobJson);
 	const linkJson = document.createElement('a');
 	linkJson.href = urlJson;

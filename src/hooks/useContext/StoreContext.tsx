@@ -8,8 +8,6 @@ export const initialStateContext: InitialStateContext = {
 	},
 	json: '{}',
 	isLogin: true,
-	status: 'idle',
-	onprogress: 0,
 	error: [],
 };
 

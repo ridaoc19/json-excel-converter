@@ -5,7 +5,6 @@ type ExcelType = () => JSX.Element;
 
 const Excel: ExcelType = () => {
 	const { stateContext } = useContext(CreateContext);
-	// const { excel } = useAppSelector(globalState);
 
 	return (
 		<div className='excel'>

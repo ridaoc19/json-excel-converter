@@ -1,7 +1,8 @@
 import * as XLSX from 'xlsx';
+import { TYPE_EXCEL } from '../core/const';
 
+// Descargar archivo Excel
 export const excelGenerate = ({ header, rows }: Excel): void => {
-	// Descargar archivo Excel
 	try {
 		const worksheet = XLSX.utils.json_to_sheet(rows);
 
@@ -12,7 +13,7 @@ export const excelGenerate = ({ header, rows }: Excel): void => {
 
 		const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 		const blobExcel = new Blob([excelBuffer], {
-			type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+			type: TYPE_EXCEL,
 		});
 		const urlExcel = URL.createObjectURL(blobExcel);
 		const linkExcel = document.createElement('a');
@@ -55,19 +56,5 @@ export const excelReader = (e: ProgressEvent<FileReader>): SheetToJsonOutput => 
 		return newHeader.map(key => items[key] || '');
 	});
 
-	// const json = JSON.stringify(excelToJson(jsonData), null, 2);
-	// console.log(newData);
-
-	// const json = jsonToExcel(newData);
-
-	// console.log(jsonToExcel(newData));
-
-	// const header = jsonData[0] as HeaderRow;
-	// const rows = jsonData.slice(1) as RowData[];
 	return [newHeader, ...newRows];
-	// return {
-	// 	json,
-	// 	header,
-	// 	rows,
-	// };
 };

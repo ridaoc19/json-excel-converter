@@ -7,7 +7,7 @@ import { parceData } from '../../../utils/parceData';
 
 const FileActions = (): JSX.Element => {
 	const { stateContext, setStateContext } = useContext(CreateContext);
-	const [uploadLabel, setUploadLabel] = useState<number>(0);
+	const [progress, setProgress] = useState<number>(0);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -24,9 +24,9 @@ const FileActions = (): JSX.Element => {
 				};
 
 				reader.onerror = () => {};
-				reader.onloadstart = () => setUploadLabel(10);
+				reader.onloadstart = () => setProgress(10);
 				reader.onprogress = e =>
-					e.lengthComputable && setUploadLabel(Number(((e.loaded / e.total) * 100).toFixed(0)));
+					e.lengthComputable && setProgress(Number(((e.loaded / e.total) * 100).toFixed(0)));
 
 				if (selectedFile.type === TYPE_JSON) {
 					reader.readAsText(selectedFile);
@@ -44,17 +44,23 @@ const FileActions = (): JSX.Element => {
 		excelGenerate(stateContext.excel);
 	};
 
+	const renderUploadLabel = ({ uploadLabel }: { uploadLabel: number }): string => {
+		if (uploadLabel === 0) {
+			return 'Subir archivo';
+		}
+		if (uploadLabel === 100) {
+			return 'Archivo Cargado';
+		}
+		return `Subiendo... ${uploadLabel} %`;
+	};
+
 	return (
 		<div className='file-actions'>
 			<div className='file-actions__upload'>
 				<div className='file-actions__upload--input'>
 					<label htmlFor='jsonInput' style={{ position: 'relative' }}>
-						<div className='progress-bar' style={{ width: `${uploadLabel}` }} />
-						{uploadLabel === 0
-							? 'Subir archivo'
-							: uploadLabel === 100
-								? 'Archivo Cargado'
-								: `Subiendo... ${uploadLabel} %`}
+						<div className='progress-bar' style={{ width: `${progress}` }} />
+						{renderUploadLabel({ uploadLabel: progress })}
 						<input id='jsonInput' ref={fileInputRef} type='file' onChange={handleFileChange} />
 					</label>
 				</div>
@@ -67,7 +73,7 @@ const FileActions = (): JSX.Element => {
 						if (fileInputRef.current) {
 							fileInputRef.current.value = '';
 						}
-						setUploadLabel(0);
+						setProgress(0);
 						setStateContext({ ...initialStateContext, isLogin: true });
 					}}
 				>

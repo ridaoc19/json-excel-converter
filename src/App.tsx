@@ -1,17 +1,16 @@
 import { useContext } from 'react';
 import { CreateContext } from './hooks/useContext/StoreContext';
-import './styles/app.scss';
+
 import Auth from './views/Auth/Auth';
 import Home from './views/Home/Home';
+import './styles/app.scss';
 
 const App = (): JSX.Element => {
-	const {
-		stateContext: { isLogin },
-	} = useContext(CreateContext);
+	const { stateContext } = useContext(CreateContext);
 
 	return (
 		<div className='app'>
-			{isLogin ? (
+			{stateContext.isLogin ? (
 				<div className='app__home'>
 					<Home />
 				</div>

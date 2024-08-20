@@ -8,11 +8,10 @@ body {
 	padding: 0;
 }
 .app {
-
-  &__login{
-    height: 100%;
-    display: grid;
-    justify-content: center;
-    gap: 1rem;
-  }
+	&__login {
+		height: 100%;
+		display: grid;
+		justify-content: center;
+		gap: 1rem;
+	}
 }

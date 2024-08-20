@@ -12,7 +12,7 @@ const Auth = (): JSX.Element => {
 
 	const handleLogin = (): void => {
 		if (name === 'bienvenido' && password === '123') {
-			setStateContext(true);
+			setStateContext(prevState => ({ ...prevState, isLogin: true }));
 		}
 	};
 	return (
