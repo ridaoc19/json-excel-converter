@@ -3,8 +3,6 @@
 // type TypeType = { [type: string]: PlacementType };
 // type DomainType = { [domain: string]: TypeType };
 
-import { excelToJson } from './excelToJson';
-
 // // Función para obtener los encabezados únicos de los datos
 // function getHeaders(data: DomainType): string[] {
 // 	const headersSet: Set<string> = new Set();
