@@ -55,11 +55,6 @@ export const excelReader = (e: ProgressEvent<FileReader>): SheetToJsonOutput => 
 		return newHeader.map(key => items[key] || '');
 	});
 
-	// return {
-	// 	json: JSON.stringify(data, null, 2),
-	// 	excel: { header, rows },
-	// };
-
 	// const json = JSON.stringify(excelToJson(jsonData), null, 2);
 	// console.log(newData);
 
