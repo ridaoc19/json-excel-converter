@@ -15,39 +15,10 @@ export interface InitialStateGlobal {
 
 const initialStateGlobal: InitialStateGlobal = {
 	excel: {
-		header: ['Introducción', 'Subir archivo', 'Limpiar', 'Descargar', 'Editor de texto'],
-		rows: [
-			[
-				'En esta aplicación puede agregar archivos con extension Excel y JSON, puede modificarlo en el editor y luego descargarlos',
-				'Con este botón podrás subir archivos Excel o Json',
-				'Podrás Limpiar todo lo que este cargado',
-				'Descargara un archivo Excel y JSON con el contenido',
-				'Puede editar el texto que haya cargado, se vera reflejado en el excel y descargarlo',
-			],
-			['Puede crear una nueva fila', '', '', '', ''],
-		],
+		header: [],
+		rows: [],
 	},
-	json: JSON.stringify(
-		[
-			{
-				Introducción:
-					'En esta aplicación puede agregar archivos con extension Excel y JSON, puede modificarlo en el editor y luego descargarlos',
-				'Subir archivo': 'Con este botón podrás subir archivos Excel o Json',
-				Limpiar: 'Podrás Limpiar todo lo que este cargado',
-				Descargar: 'Descargara un archivo Excel y JSON con el contenido',
-				'Editor de texto':
-					'Puede editar el texto que haya cargado, se vera reflejado en el excel y descargarlo',
-			},
-			{
-				Introducción: 'Puede crear una nueva fila',
-				Limpiar: '',
-				Descargar: '',
-				'Editor de texto': '',
-			},
-		],
-		null,
-		2
-	),
+	json: '{}',
 	status: 'idle',
 	onprogress: 0,
 	error: [],
@@ -60,7 +31,8 @@ export const globalSlice = createAppSlice({
 		postExcelJson: create.reducer(
 			(
 				state,
-				{ payload }: PayloadAction<InitialStateGlobal['excel'] | InitialStateGlobal['json']>
+				{ payload }: PayloadAction<SheetToJsonOutput | InitialStateGlobal['json']>
+				// { payload }: PayloadAction<InitialStateGlobal['excel'] | InitialStateGlobal['json']>
 			) => {
 				const { json, excel } = parceData(payload);
 				state.json = json;

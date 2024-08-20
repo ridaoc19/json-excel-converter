@@ -24,7 +24,8 @@ export const excelGenerate = ({ header, rows }: Excel): void => {
 	}
 };
 
-export const excelReader = (e: ProgressEvent<FileReader>): Excel => {
+export const excelReader = (e: ProgressEvent<FileReader>): SheetToJsonOutput => {
+	// export const excelReader = (e: ProgressEvent<FileReader>): Excel & { json: string } => {
 	const data = new Uint8Array(e.target?.result as ArrayBuffer);
 	const workbook = XLSX.read(data, { type: 'array' });
 	const sheetName = workbook.SheetNames[0];
@@ -34,12 +35,44 @@ export const excelReader = (e: ProgressEvent<FileReader>): Excel => {
 	}) as SheetToJsonOutput;
 
 	// TODO
-
 	const header = jsonData[0] as HeaderRow;
 	const rows = jsonData.slice(1) as RowData[];
+	const objectsArray: Array<Record<string, CellData>> = rows.map(row => {
+		if (Array.isArray(row)) {
+			return header.reduce(
+				(acc, key, index) => {
+					acc[key] = row[index] ?? '';
+					return acc;
+				},
+				{} as Record<string, CellData>
+			);
+		}
+		return {};
+	});
 
-	return {
-		header,
-		rows,
-	};
+	const newHeader = [...new Set(objectsArray.flatMap(item => Object.keys(item)))];
+	const newRows: RowData[] = objectsArray.map(items => {
+		return newHeader.map(key => items[key] || '');
+	});
+
+	// return {
+	// 	json: JSON.stringify(data, null, 2),
+	// 	excel: { header, rows },
+	// };
+
+	// const json = JSON.stringify(excelToJson(jsonData), null, 2);
+	// console.log(newData);
+
+	// const json = jsonToExcel(newData);
+
+	// console.log(jsonToExcel(newData));
+
+	// const header = jsonData[0] as HeaderRow;
+	// const rows = jsonData.slice(1) as RowData[];
+	return [newHeader, ...newRows];
+	// return {
+	// 	json,
+	// 	header,
+	// 	rows,
+	// };
 };
