@@ -1,9 +1,3 @@
-// type CellData = string | number | boolean;
-// type JsonData = Record<string, string | number | boolean | null>;
-// type HeaderRow = string[]; // Header row type
-// type RowData = CellData[];
-// type SheetToJsonOutput = [HeaderRow, ...RowData[]];
-
 export type DynamicEntry = { [key: string]: string | DynamicEntry | string[] };
 export type PlacementType = { [placement: string]: DynamicEntry[] };
 export type TypeType = { [type: string]: PlacementType };

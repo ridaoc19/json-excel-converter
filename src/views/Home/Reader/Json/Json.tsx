@@ -1,16 +1,15 @@
 import MonacoEditor from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
-import { useRef } from 'react';
-import useAppDispatch from '../../../hooks/useAppDispatch';
-import useAppSelector from '../../../hooks/useAppSelector';
-import { globalState, postError, postExcelJson } from '../../../redux/globalSlice';
+import { useContext, useRef } from 'react';
+import { CreateContext } from '../../../../hooks/useContext/StoreContext';
+import { parceData } from '../../../../utils/parceData';
+import generateUniqueId from '../../../../utils/uuid';
 import Validation from './Validation/Validation';
 
 type JsonType = () => JSX.Element;
 
 const Json: JsonType = () => {
-	const { json } = useAppSelector(globalState);
-	const dispatch = useAppDispatch();
+	const { stateContext, setStateContext } = useContext(CreateContext);
 	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
 	const handleEditorDidMount = (editorInstance: monaco.editor.IStandaloneCodeEditor): void => {
@@ -19,7 +18,7 @@ const Json: JsonType = () => {
 
 	const handleEditorChange = (data: string | undefined): void => {
 		if (data !== undefined) {
-			dispatch(postExcelJson(data));
+			setStateContext({ ...stateContext, ...parceData(data) });
 		}
 	};
 
@@ -27,19 +26,17 @@ const Json: JsonType = () => {
 		<div className='json'>
 			<div className='json__editor'>
 				<MonacoEditor
-					// height='58vh'
 					language='json'
-					value={json}
+					value={stateContext.json}
 					onChange={handleEditorChange}
 					onMount={handleEditorDidMount}
 					onValidate={event => {
-						const error: Omit<ErrorLocal, 'id'>[] = event.map(
-							({ message, startLineNumber: row }) => ({
-								message,
-								row,
-							})
-						);
-						dispatch(postError(error));
+						const error: ErrorLocal[] = event.map(({ message, startLineNumber: row }) => ({
+							id: generateUniqueId(),
+							message,
+							row,
+						}));
+						setStateContext({ ...stateContext, error });
 					}}
 					theme='vs-dark'
 					options={{
@@ -50,7 +47,7 @@ const Json: JsonType = () => {
 				/>
 			</div>
 			<div className='json__validation'>
-				<Validation />
+				<Validation error={stateContext.error} />
 			</div>
 		</div>
 	);

@@ -1,19 +1,24 @@
-import FileActions from './components/FileActions/FileActions';
-import Reader from './components/Reader/Reader';
+import { useContext } from 'react';
+import { CreateContext } from './hooks/useContext/StoreContext';
+
+import Auth from './views/Auth/Auth';
+import Home from './views/Home/Home';
 import './styles/app.scss';
 
 const App = (): JSX.Element => {
+	const { stateContext } = useContext(CreateContext);
+
 	return (
 		<div className='app'>
-			<div className='app__title'>
-				<h1>{`Convertidor JSON <==> EXCEL`}</h1>
-			</div>
-			<div className='app__file-actions'>
-				<FileActions />
-			</div>
-			<div className='app__reader'>
-				<Reader />
-			</div>
+			{stateContext.isLogin ? (
+				<div className='app__home'>
+					<Home />
+				</div>
+			) : (
+				<div className='app__login'>
+					<Auth />
+				</div>
+			)}
 		</div>
 	);
 };
