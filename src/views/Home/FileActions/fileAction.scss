@@ -1,0 +1,95 @@
+@mixin flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.file-actions {
+	padding: $spacing;
+	border-radius: $border-radius;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	justify-content: space-between;
+
+	&__upload {
+		&--input {
+			label {
+				display: inline-block;
+				cursor: pointer;
+				background-color: $primary-color;
+				padding: 0.75rem 1.5rem;
+				border-radius: $border-radius;
+				font-weight: bold;
+				transition: background-color 0.3s ease;
+				position: relative;
+				overflow: hidden;
+				text-align: center;
+
+				&:hover {
+					background-color: darken($primary-color, 10%);
+				}
+
+				input {
+					display: none;
+				}
+
+				.progress-bar {
+					position: absolute;
+					top: 0;
+					left: 0;
+					height: 100%;
+					background-color: rgba(255, 255, 255, 0.2);
+					z-index: 0;
+					transition: width 0.3s ease;
+				}
+
+				span {
+					z-index: 1;
+					position: relative;
+				}
+			}
+		}
+	}
+
+	&__empty {
+		button {
+			background-color: $danger-color;
+			border: none;
+			color: $text-color;
+			padding: 0.75rem 1.5rem;
+			border-radius: $border-radius;
+			cursor: pointer;
+			font-weight: bold;
+			transition: background-color 0.3s ease;
+
+			&:hover {
+				background-color: darken($danger-color, 10%);
+			}
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+
+	&__download {
+		button {
+			background-color: $primary-color;
+			border: none;
+			color: $text-color;
+			padding: 0.75rem 1.5rem;
+			border-radius: $border-radius;
+			cursor: pointer;
+			font-weight: bold;
+			transition: background-color 0.3s ease;
+
+			&:hover {
+				background-color: darken($primary-color, 10%);
+			}
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+}

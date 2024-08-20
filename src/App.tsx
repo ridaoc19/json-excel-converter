@@ -1,56 +1,23 @@
-import { useState } from 'react';
-import FileActions from './components/FileActions/FileActions';
-import Reader from './components/Reader/Reader';
+import { useContext } from 'react';
+import { CreateContext } from './hooks/useContext/StoreContext';
 import './styles/app.scss';
-
-interface User {
-	name: string;
-	password: string;
-}
+import Auth from './views/Auth/Auth';
+import Home from './views/Home/Home';
 
 const App = (): JSX.Element => {
-	const [{ name, password }, setUser] = useState<User>({ name: '', password: '' });
-	const [isLogin, setIsLogin] = useState<boolean>(true);
-
-	const handleLogin = (): void => {
-		if (name === 'bienvenido' && password === '123') {
-			setIsLogin(true);
-		}
-	};
+	const {
+		stateContext: { isLogin },
+	} = useContext(CreateContext);
 
 	return (
 		<div className='app'>
 			{isLogin ? (
-				<>
-					<div className='app__title'>
-						<h1>{`Convertidor JSON <==> EXCEL`}</h1>
-					</div>
-					<div className='app__file-actions'>
-						<FileActions />
-					</div>
-					<div className='app__reader'>
-						<Reader />
-					</div>
-				</>
+				<div className='app__home'>
+					<Home />
+				</div>
 			) : (
 				<div className='app__login'>
-					<div className='login'>
-						<input
-							type='text'
-							placeholder='Usuario'
-							value={name}
-							onChange={e => setUser(prevState => ({ ...prevState, name: e.target.value }))}
-						/>
-						<input
-							type='password'
-							placeholder='Contraseña'
-							value={password}
-							onChange={e => setUser(prevState => ({ ...prevState, password: e.target.value }))}
-						/>
-						<button type='button' onClick={handleLogin}>
-							login
-						</button>
-					</div>
+					<Auth />
 				</div>
 			)}
 		</div>

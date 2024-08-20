@@ -1,0 +1,29 @@
+.json {
+	height: 100%;
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: 80% 15%;
+	gap: 1rem;
+
+	&__editor {
+		height: 100%;
+		.monaco-editor {
+			border: 1px solid $editor-border;
+			border-radius: $border-radius;
+			height: 100%;
+		}
+	}
+
+	&__validation {
+		height: 100%;
+		overflow-y: auto;
+		background-color: lighten($error-color, 40%);
+		padding: 0.5rem;
+		border-radius: $border-radius;
+		color: $error-color;
+
+		p {
+			margin: 0;
+		}
+	}
+}
