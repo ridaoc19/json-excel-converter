@@ -1,6 +1,5 @@
 declare type CellData = string | number | boolean;
-// declare type JsonData = Record<string, string | number | boolean | null>;
-declare type HeaderRow = string[]; // Header row type
+declare type HeaderRow = string[];
 declare type RowData = CellData[];
 declare type SheetToJsonOutput = [HeaderRow, ...RowData[]];
 
